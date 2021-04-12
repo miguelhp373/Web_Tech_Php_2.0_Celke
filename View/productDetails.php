@@ -2,9 +2,9 @@
 include_once('../model/connection.php');
 
 $homeUrl = '../index.php';
-$AdmUrl = '../Adm/index.php';
+$AdmUrl = '../Login/index.php';
 $courseID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-define('ACCESS',true);
+$access = true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +34,7 @@ define('ACCESS',true);
             $productsResult = $executeQuery->fetchAll(PDO::FETCH_ASSOC);
         } else {
             echo "<h2 class='mt-5 ml-5'>Produto Não Encontrado</h2>";
+            $productsResult = [];
         }
 
         foreach ($productsResult as $item) {

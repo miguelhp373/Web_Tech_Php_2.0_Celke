@@ -4,6 +4,7 @@ $homeUrl = '../index.php';
 $courseID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 //$hiddenClassCart = 'visually-hidden';
 $hiddenClassSearch = 'visually-hidden';
+$access = true;
 
 if(!empty($_GET['id'])){
 ?>

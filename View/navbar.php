@@ -21,7 +21,7 @@ if (!$access) {
             </ul>
             <form class="d-flex <?php echo $hiddenClassSearch; ?>" method="GET">
                 <input class="form-control me-2" type="search" placeholder="Buscar Cursos" aria-label="Search" name="search" id="search" required>
-                <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                <button class="btn btn-secondary" type="submit">Pesquisar</button>
             </form>
         </div>
     </div>

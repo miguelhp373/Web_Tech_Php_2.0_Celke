@@ -2,7 +2,7 @@
 include_once('model/connection.php');
 
 $homeUrl = 'index.php?search=';
-$AdmUrl = 'Adm/index.php';
+$AdmUrl = 'Login/index.php';
 $cartUrl = 'View/checkout.php';
 $hiddenClassHome = 'visually-hidden';
 
@@ -54,7 +54,7 @@ $access = true;
 
         <?php if ($executeQuery->rowCount() > 0) { ?>
             <div class="container">
-                <h2 class="mt-5 ml-5"><?php echo $executeQuery->rowCount(); ?> Produtos Encontrados</h2>
+                <h2 class="mt-5 ml-5"><?php echo $executeQuery->rowCount(); ?> Produto(s) Encontrado(s) com a Palavra <?php echo '"'.$searchInput.'"';?></h2>
                 <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5 cards-products">
                     <?php foreach ($productsResult as $item) { ?>
 
@@ -73,7 +73,7 @@ $access = true;
             </div>
         <?php } else { ?>
             <div class="container">
-                <h2 class="mt-5 ml-5">Nenhum Produto Encontrado</h2>
+                <h2 class="mt-5 ml-5">Nenhum Produto Encontrado com a Palavra <?php echo '"'.$searchInput.'"';?></h2>
             </div>
         <?php } ?>
 
