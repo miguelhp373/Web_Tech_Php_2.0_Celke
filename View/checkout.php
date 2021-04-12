@@ -4,6 +4,8 @@ $homeUrl = '../index.php';
 $courseID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 //$hiddenClassCart = 'visually-hidden';
 $hiddenClassSearch = 'visually-hidden';
+
+if(!empty($_GET['id'])){
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,3 +100,6 @@ $hiddenClassSearch = 'visually-hidden';
 </body>
 
 </html>
+<?php }else{
+    echo "<h2>Erro 404 - Página Não Encontrada</h2>";
+}?>

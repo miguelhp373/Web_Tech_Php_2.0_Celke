@@ -1,6 +1,12 @@
+<?php
+
+if (!$access) {
+    header("Location:/");
+    die("Erro: Pagina nao encontrada!<br>");
+}?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Virtual Shop Cursos</a>
+        <a class="navbar-brand" href="<?php echo $homeUrl; ?>">Virtual Shop Cursos</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -9,14 +15,12 @@
                 <li class="nav-item <?php echo $hiddenClassHome; ?>">
                     <a class="nav-link" aria-current="page" href="<?php echo $homeUrl; ?>"><i class="fas fa-shopping-cart"></i>&nbsp;Produtos</a>
                 </li>
-                <!-- <li class="nav-item <?php //echo $hiddenClassCart;
-                                            ?>">
-                        <a class="nav-link" href="<?php //echo $cartUrl;
-                                                    ?>"><i class="fas fa-shopping-cart"></i>&nbsp;Carrinho</a>
-                    </li> -->
+                <li class="nav-item <?php echo $hiddenClassLogin; ?>">
+                    <a class="nav-link" href="<?php echo $AdmUrl; ?>"><i class="fas fa-user-friends"></i></i>&nbsp;Login</a>
+                </li>
             </ul>
-            <form class="d-flex <?php echo $hiddenClassSearch; ?>">
-                <input class="form-control me-2" type="search" placeholder="Buscar Cursos" aria-label="Search">
+            <form class="d-flex <?php echo $hiddenClassSearch; ?>" method="GET">
+                <input class="form-control me-2" type="search" placeholder="Buscar Cursos" aria-label="Search" name="search" id="search" required>
                 <button class="btn btn-outline-success" type="submit">Pesquisar</button>
             </form>
         </div>

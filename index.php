@@ -1,9 +1,15 @@
 <?php
 include_once('model/connection.php');
-$homeurl = '#';
+
+$homeUrl = 'index.php?search=';
+$AdmUrl = 'Adm/index.php';
 $cartUrl = 'View/checkout.php';
 $hiddenClassHome = 'visually-hidden';
+
+$access = true;
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,39 +33,84 @@ $hiddenClassHome = 'visually-hidden';
 
 <body>
 
-    <?php include('View/navbar.php'); ?>
+    <?php
+    $searchInput = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING));
+    include('View/navbar.php');
+    ?>
 
-    <div class="container">
-        <h2 class="mt-5 ml-5">Produtos</h2>
-        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5 cards-products">
-            <?php
+    <?php if (!empty($searchInput)) { ?>
 
-            $query = 'SELECT id, name, images, price, description FROM products ORDER BY id ASC';
-            $executeQuery = $connection->prepare($query);
-            $executeQuery->execute();
+        <?php
+
+        $query = "SELECT id, name, images, price, description FROM products WHERE name LIKE '%" . $searchInput . "%' ORDER BY id ASC";
+        $executeQuery = $connection->prepare($query);
+        $executeQuery->execute();
 
 
-            if ($executeQuery->rowCount() > 0) {
-                $productsResult = $executeQuery->fetchAll(PDO::FETCH_ASSOC);
-            } else {
-                return [];
-            }
+        if ($executeQuery->rowCount() > 0) {
+            $productsResult = $executeQuery->fetchAll(PDO::FETCH_ASSOC);
+        }
+        ?>
 
-            foreach ($productsResult as $item) { ?>
+        <?php if ($executeQuery->rowCount() > 0) { ?>
+            <div class="container">
+                <h2 class="mt-5 ml-5"><?php echo $executeQuery->rowCount(); ?> Produtos Encontrados</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5 cards-products">
+                    <?php foreach ($productsResult as $item) { ?>
 
-                <div class="col">
-                    <div class="card">
-                        <img src="<?php echo 'images/products/' . $item['images'] ?>" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $item['name'] ?></h5>
-                            <p class="card-text">R$<?php echo number_format($item['price'], 2, ',', '.') ?></p>
-                            <a href="View/productDetails.php?id=<?php echo $item['id'] . '&course=' . $item['name'] ?>" class="btn btn-primary">Detalhes</a>
+                        <div class="col">
+                            <div class="card">
+                                <img src="<?php echo 'images/products/' . $item['images'] ?>" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $item['name'] ?></h5>
+                                    <p class="card-text">R$<?php echo number_format($item['price'], 2, ',', '.') ?></p>
+                                    <a href="View/productDetails.php?id=<?php echo $item['id'] . '&course=' . $item['name'] ?>" class="btn btn-primary">Detalhes</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        <?php } else { ?>
+            <div class="container">
+                <h2 class="mt-5 ml-5">Nenhum Produto Encontrado</h2>
+            </div>
+        <?php } ?>
+
+    <?php } else { ?>
+        <div class="container">
+            <h2 class="mt-5 ml-5">Produtos</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5 cards-products">
+                <?php
+
+                $query = 'SELECT id, name, images, price, description FROM products ORDER BY id ASC';
+                $executeQuery = $connection->prepare($query);
+                $executeQuery->execute();
+
+
+                if ($executeQuery->rowCount() > 0) {
+                    $productsResult = $executeQuery->fetchAll(PDO::FETCH_ASSOC);
+                } else {
+                    return [];
+                }
+
+                foreach ($productsResult as $item) { ?>
+
+                    <div class="col">
+                        <div class="card">
+                            <img src="<?php echo 'images/products/' . $item['images'] ?>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $item['name'] ?></h5>
+                                <p class="card-text">R$<?php echo number_format($item['price'], 2, ',', '.') ?></p>
+                                <a href="View/productDetails.php?id=<?php echo $item['id'] . '&course=' . $item['name'] ?>" class="btn btn-primary">Detalhes</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
         </div>
-    </div>
+
+    <?php } ?>
 
 
 </body>

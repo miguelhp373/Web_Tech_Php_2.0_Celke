@@ -1,8 +1,10 @@
 <?php
 include_once('../model/connection.php');
+
 $homeUrl = '../index.php';
-//$cartUrl = 'checkout.php';
+$AdmUrl = '../Adm/index.php';
 $courseID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+define('ACCESS',true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +33,7 @@ $courseID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         if ($executeQuery->rowCount() > 0) {
             $productsResult = $executeQuery->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            return [];
+            echo "<h2 class='mt-5 ml-5'>Produto Não Encontrado</h2>";
         }
 
         foreach ($productsResult as $item) {
@@ -51,7 +53,7 @@ $courseID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 mt-5">
+                <div class="col-md-12 mt-5 mb-5">
                     <?php echo $item['description']; ?>
                 </div>
             </div>
